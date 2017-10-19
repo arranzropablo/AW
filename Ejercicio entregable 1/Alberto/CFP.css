@@ -1,0 +1,59 @@
+/* Introduce aquí las reglas de estilo */
+h1, h3 {
+ color: blue; 
+}
+
+.colored-text { 
+	color: lightblue;
+ }
+
+.purple-strong strong {
+ color: purple; 
+}
+
+.title { 
+	text-align: center; 
+	background: lightblue;
+	/*width: 50%;*/
+	margin: auto 20%;
+	padding: 10px;
+	border-radius: 15px 15px 15px 15px;
+}
+
+.program-table, .program-table tr td, .program-table th {
+	text-align: center;
+	border: solid black 3px;
+	border-collapse: collapse;
+}
+
+
+.session-cell, #special-cell { 
+	background: lightblue; 
+}
+
+.special-cell2 {
+	background: #FFD289;
+}
+
+#special-cell3 {
+	background: #EAFDCF;
+}
+
+.rest-cell { 
+	background: purple; 
+	color: white; 
+	font-size: 20px;
+}
+
+.day-cell { 
+	background: brown; 
+	color: white;
+}
+
+.hours-cell {
+	background: #FFD289;
+}
+
+.btn-primary {
+	background: #CC3333;
+}

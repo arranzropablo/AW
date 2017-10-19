@@ -1,0 +1,23 @@
+#header_right{
+	display:none;
+}
+
+.estado_tarea{
+	display:none;
+}
+
+#eliminar_btn{
+	display:none;
+}
+
+#nueva_tarea{
+	display:none;
+}
+
+.etiqueta{
+	color:#C7C3C4;
+}
+
+.tarea_terminada{
+	color:#8B8889;
+}
