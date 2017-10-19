@@ -1,0 +1,66 @@
+.header{
+	margin: auto 30%;
+	padding: 10px;
+	text-align: center;
+	border-radius: 20px 20px 20px 20px;
+	background-color: #C1F7DC;
+	color: #0081AF;
+}
+
+#title{
+	font-size: 40px;
+	color: #006A91;
+	font-weight: bold;
+}
+
+.article{
+	margin: auto 10%;
+}
+
+.articleheader{
+	font-size: 25px;
+	font-weight: bold;
+	color: #006A91;
+	border-bottom: solid 1px black;
+}
+
+.articlebody{
+	font-family: 'PT Sans', sans-serif;
+	font-size: 18px;
+	text-align: justify;
+}
+
+#scheduletable{
+	text-align: center;
+	border-collapse: collapse;
+}
+
+#scheduletable th{
+	border: solid 1px black;
+	background-color: #EABA6B;
+}
+
+.sessioncell{
+	border: solid 1px black;
+	background-color: #2DC7FF;
+}
+
+.specialcell{
+	border: solid 1px black;
+	background-color: #A491D3;
+}
+
+.assemblycell{
+	border: solid 1px black;
+	background-color: #AB2346;
+}
+
+.breakcell{
+	border: solid 1px black;
+	background-color: #00B295;
+}
+
+.timecell{
+	border: solid 1px black;
+	background-color: #EABA6B;
+}
