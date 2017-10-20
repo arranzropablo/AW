@@ -69,6 +69,11 @@
 	justify-content: flex-start;
 }
 
+.marca span::before {
+	content:url("../resources/tick.gif");
+	margin-right: 2px;
+}
+
 .tags{
 	background: orange;
 	text-align: center;
@@ -126,7 +131,7 @@
 
 }
 
-.marca:hover, .tags:hover, #btn-eliminar:hover, #btn-tarea:hover, .especial:hover {
+.marca:hover, #btn-eliminar:hover, #btn-tarea:hover, .especial:hover {
 	background: #A59D97;
 }
 
