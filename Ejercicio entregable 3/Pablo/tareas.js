@@ -28,22 +28,21 @@ function getToDoTasks(tasks) {
  * Devuelve las tareas que contengan el tag especificado
  */
 function findByTag(tasks, tag) {
-  //TODO
-  return tasks.filter(task => task.tags.some(t => t === tag))
+  return tasks.filter(task => task.tags.indexOf(tag) !== -1);
 }
 
 /**
  * Devuelve las tareas que contengan alguno de los tags especificados
  */
 function findByTags(tasks, tags) {
-  /* Implementar */
+  return tasks.filter(task => task.tags.some(tag => tags.indexOf(tag) !== -1));
 }
 
 /**
  * Devuelve el número de tareas finalizadas
  */
 function countDone(tasks) {
-  /* Implementar */
+  return tasks.reduceRight(task => tasks.remove()task.done !== true)
 }
 
 /**
