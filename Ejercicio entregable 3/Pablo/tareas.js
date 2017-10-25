@@ -42,16 +42,31 @@ function findByTags(tasks, tags) {
  * Devuelve el número de tareas finalizadas
  */
 function countDone(tasks) {
-  return tasks.reduceRight(task => tasks.remove()task.done !== true)
+  return tasks.filter(task => task.done === true).reduce((num, inicio) => num + 1, 0);
 }
 
 /**
  * Construye una tarea a partir de un texto con tags de la forma "@tag"
  */
 function createTask(text) {
-  /* Implementar */
-}
+  let regexSplitNameAndTags = /([a-zA-Z0-9" "]*)(@.*)?/;
+  let nombre = regexSplitNameAndTags.exec(text)[1].trim();
+  let etiquetasRestantes = regexSplitNameAndTags.exec(text)[2];
 
+  let regexSplitTags = /(@)([a-zA-Z0-9" "]*)(.*)/
+  let etiquetasCollection = [];
+  let i = 0;
+  while(etiquetasRestantes !== "" && etiquetasRestantes !== null && etiquetasRestantes !== undefined){
+    etiquetasCollection[i] = regexSplitTags.exec(etiquetasRestantes)[2].trim();
+    etiquetasRestantes = regexSplitTags.exec(etiquetasRestantes)[3].trim();
+    i++;
+  }
+
+  let task = {};
+  task.text = nombre;
+  task.tags = etiquetasCollection;
+  return task;
+}
 
 /*
   NO MODIFICAR A PARTIR DE AQUI
