@@ -16,14 +16,8 @@ class FlujoNumeros {
  * Imprime la suma de los dos primeros números del flujo pasado como parámetro.
  */
 function sumaDosLog(flujo) {
-    let total;
-    flujo.siguienteNumero(num => return num/*flujo.siguienteNumero(num2 => total = num + num2)*/);
-    return total;
+    flujo.siguienteNumero(num => flujo.siguienteNumero(num2 => console.log(num + num2)));
 }
-
-let flujo = new FlujoNumeros();
-
-console.log(sumaDosLog(flujo))
 
 /**
  * Llama a la función f con la suma de los dos primeros números del flujo pasado como parámetro.
