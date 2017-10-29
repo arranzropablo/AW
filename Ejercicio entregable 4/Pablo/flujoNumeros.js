@@ -40,7 +40,7 @@ function sumaParcial(flujo, f, suma){
             suma = suma + num;
             sumaParcial(flujo, f, suma);
         }
-    });
+    })
 }
 
 
