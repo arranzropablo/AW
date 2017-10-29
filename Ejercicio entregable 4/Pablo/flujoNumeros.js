@@ -33,15 +33,14 @@ function sumaTodo(flujo, f) {
 }
 
 function sumaParcial(flujo, f, suma){
-    if(flujo.siguienteNumero(num => {
+    flujo.siguienteNumero(num => {
         if (num === undefined){
             f(suma);
-        }
-        else{
+        } else {
             suma = suma + num;
             sumaParcial(flujo, f, suma);
         }
-    }));
+    });
 }
 
 
