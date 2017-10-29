@@ -11,11 +11,6 @@ class FlujoNumeros {
     }
 }
 
-flujo = new FlujoNumeros();
-//sumaDosLog(flujo);
-//sumaDos(flujo, suma => console.log(`El resultado de la suma de los dos primeros números es ${suma}`));
-sumaTodo(flujo, suma => console.log(`El resultado de la suma de todos los números es ${suma}`));
-
 /**
  * Imprime la suma de los dos primeros números del flujo pasado como parámetro.
  */
@@ -34,8 +29,7 @@ function sumaDos(flujo, f) {
  * Llama a la función f con la suma de todos los números del flujo pasado como parámetro
  */
 function sumaTodo(flujo, f) {
-    let suma = 0;
-    sumar(flujo, f, suma);
+    sumar(flujo, f, 0);
 }
 
 function sumar(flujo, f, suma) {
