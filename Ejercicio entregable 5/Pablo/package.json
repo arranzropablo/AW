@@ -14,7 +14,7 @@
     "5"
   ],
   "private": true,
-  "author": "Alberto Camino",
+  "author": "Pablo Arranz",
   "license": "ISC",
   "dependencies": {
     "mysql": "^2.15.0"
