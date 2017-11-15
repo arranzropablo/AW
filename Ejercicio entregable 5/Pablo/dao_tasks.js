@@ -39,12 +39,35 @@ class DAOTasks {
                 callback(err);
                 return;
             }
-            connection.query("select ",
+            connection.query("select id, text, done, tag from user join task on email=user left join tag on id=taskId where email = ? order by id asc",
                             [email], 
-                            (err) =>{
-                                connection.release();
-                                callback(err);
-                                return;
+                            (err, result) =>{
+                                //Habra que liberarla antes del return, no? para que se libere si o si
+                                connection.release();                                
+                                if(err){
+                                    callback(err);
+                                    return;
+                                }
+                                let tasks = [], id, text, done, tags = [], differentTask;
+                                result.forEach(element => {
+                                    if(element.id !== id){
+                                        if(differentTask){
+                                            tasks.push({ id: id, text: text, done: done, tags: tags});
+                                        }
+                                        id = element.id;
+                                        text = element.text;
+                                        done = element.done;
+                                        differentTask = true;
+                                    }
+                                    if(element.tag !== null){
+                                        tags.push(element.tag);
+                                    }
+                                });
+                                if (result.length > 0){
+                                    tasks.push({ id: element.id, text: element.text, done: element.done, tags: element.tags});
+                                }
+                                callback(null, tasks);
+                                
             })
         })
 
@@ -65,9 +88,13 @@ class DAOTasks {
      * @param {function} callback Función callback que será llamada tras la inserción
      */
     insertTask(email, task, callback) {
-
-        /* Implementar */
-        
+        this.pool.getConnection((err, connection) =>{
+            if(err){
+                callback(err);
+                return;
+            }
+            //seguir aqui
+        })        
     }
 
     /**
