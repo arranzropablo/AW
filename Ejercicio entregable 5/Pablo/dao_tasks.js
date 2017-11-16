@@ -42,8 +42,7 @@ class DAOTasks {
             connection.query("select id, text, done, tag from user join task on email=user left join tag on id=taskId where email = ? order by id asc",
                             [email], 
                             (err, result) =>{
-                                //Habra que liberarla antes del return, no? para que se libere si o si
-                                connection.release();                                
+                                connection.release();
                                 if(err){
                                     callback(err);
                                     return;
@@ -93,7 +92,32 @@ class DAOTasks {
                 callback(err);
                 return;
             }
-            //seguir aqui
+            //esto va a hacer que si es undefined se inserte false, preguntar si esta bien, sino lo del if else
+            //igual puedo hasta pasarle a las ? el valor undefined, el if else ese...
+
+            let done = task.done ? 1 : 0;
+            connection.query("insert into task (user, text, done) values(?, ?, ?)",
+                    [email, task.text, done],
+                    (err, result) => {
+                        if(err){
+                            //preguntar si hay que meter un release para q si hay error se haga el release
+                            connection.release();
+                            callback(err);
+                            return;
+                        }
+                        while(task.tags.length > 0){
+                            let tag = task.tags.shift();
+                            connection.query("insert into tag values(?, ?)",[result.id, tag],
+                                (err, result) => {
+                                    if(err){
+                                        connection.release();
+                                        callback(err);
+                                        return;
+                                    }
+                            })
+                        }
+                        connection.release();
+                    });
         })        
     }
 
