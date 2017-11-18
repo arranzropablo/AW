@@ -35,36 +35,41 @@ class DAOTasks {
     getAllTasks(email, callback) {
 
         this.pool.getConnection((err, connection) => {
-            if (err) { callback(err); return; }
+            if (err) { callback(err, undefined); return; }
             connection.query("SELECT id, text, done, tag FROM user JOIN task ON email=user LEFT JOIN tag ON id=taskId " +
                 "WHERE email = ? ORDER BY id ASC;", [email],
                 (err, rows) => {
-                    if (err) { callback(err); return; }
                     connection.release();
-                    let tasks = [];
-                    let id, text, done, tags = [],
-                        add = false;
+                    if (err) { 
+                        callback(err, undefined);
+                        return; 
+                    }
+
+                    let tasks = [], id, text, done, tags = [], add = false;
 
                     rows.forEach(row => {
                         if (id !== row.id) {
                             if (add) {
                                 tasks.push({ id: id, text: text, done: done, tags: tags });
-                                tags = new Array();
+                                tags = [];
                             }
                             id = row.id;
                             text = row.text;
                             done = row.done;
                             add = true;
                         }
-                        if (row.tag !== null) tags.push(row.tag);
+                        if (row.tag !== null){
+                            tags.push(row.tag);
+                        }
 
                     })
-                    if (rows.length > 0) { tasks.push({ id: id, text: text, done: done, tags: tags }); }
+                    if (rows.length > 0) { 
+                        tasks.push({ id: id, text: text, done: done, tags: tags }); 
+                    }
                     callback(null, tasks);
 
                 });
         });
-
     }
 
     /**
@@ -84,19 +89,20 @@ class DAOTasks {
     insertTask(email, task, callback) {
         this.pool.getConnection((err, connection) => {
             if (err) { callback(err); return; }
-            let lastId, sql;
-            if (task.done !== undefined) {
-                let done = task.done ? 1 : 0;
-                sql = "INSERT INTO task (user, text, done) VALUES ('" + email +
-                    "','" + task.text + "','" + done + "')";
-            } else sql = "INSERT INTO task (user, text) VALUES ('" + email + "','" + task.text + "')";
-            connection.query(
-                sql,
+            let lastId;
+            
+            let done = task.done ? 1 : 0;
+            connection.query("insert into task (user, text, done) values(?, ?, ?)",
+                [email, task.text, done],
                 (err, result) => {
-                    if (err) { callback(err); return; }
-
+                    if (err) {
+                        connection.release();
+                        callback(err); 
+                        return; 
+                    }
                     lastId = result.insertId;
                     if (task.tags.length > 0) {
+                        let sql;
                         sql = "INSERT INTO tag (taskId, tag) VALUES (";
                         for (let i = 0; i < task.tags.length; ++i) {
                             sql += lastId + ",'" + task.tags[i] + "')";
@@ -106,7 +112,10 @@ class DAOTasks {
                             sql,
                             (err) => {
                                 connection.release();
-                                if (err) { callback(err); return; }
+                                if (err) { 
+                                    callback(err); 
+                                    return; 
+                                }
                             }
                         );
                     }

@@ -14,7 +14,7 @@
     "5"
   ],
   "private": true,
-  "author": "Alberto Camino",
+  "author": "Juan Alberto Camino Saez y Pablo Arranz Ropero",
   "license": "ISC",
   "dependencies": {
     "mysql": "^2.15.0"
