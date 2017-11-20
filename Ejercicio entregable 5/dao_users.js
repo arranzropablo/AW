@@ -36,8 +36,11 @@ class DAOUsers {
             if (err) { callback(err); return; }
             connection.query("SELECT email, password FROM user WHERE email = ? AND password = ?", [email, password],
                 (err, rows) => {
-                    if (err) { callback(err); return; }
                     connection.release();
+                    if (err) { 
+                        callback(err, undefined); 
+                        return; 
+                    }
                     if (rows.length === 0) {
                         callback(null, false);
                     } else {

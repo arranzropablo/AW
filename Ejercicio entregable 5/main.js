@@ -20,33 +20,6 @@ const pool = mysql.createPool({
 let daoUser = new daoUsers.DAOUsers(pool);
 let daoTask = new daoTasks.DAOTasks(pool);
 
-/*daoUser.isUserCorrect("usuario@ucm.es", "mipass", (err, result) => {
-    if (err) {
-        console.error(err);
-    } else if (result) {
-        console.log("Usuario y contraseña correctos");
-    } else {
-        console.log("Usuario y/o contraseña incorrectos");
-    }
-});
-
-daoTask.getAllTasks("usuario@ucm.es", (err, tasks) => {
-    if (err) {
-        console.error(err);
-    } else {
-        console.log(tasks);
-    }
-});
-
-daoTask.insertTask("usuario@ucm.es", { text: "Nada1", tags: ["Hogar"] }, (err) => {
-    if (err) {
-        console.error(err);
-    } else {
-        console.log("Elemento insertado correctamente");
-    }
-    //pool.end();
-});*/
-
 daoUser.isUserCorrect("usuario@ucm.es", "mipass", (err, result) => {
     if (err) {
         console.error(err);
