@@ -39,8 +39,11 @@ class DAOTasks {
             connection.query("SELECT id, text, done, tag FROM user JOIN task ON email=user LEFT JOIN tag ON id=taskId " +
                 "WHERE email = ? ORDER BY id ASC;", [email],
                 (err, rows) => {
-                    if (err) { callback(err); return; }
                     connection.release();
+                    if (err) {
+                        callback(err);
+                        return;
+                    }
                     let tasks = [];
                     let id, text, done, tags = [],
                         add = false;
@@ -85,16 +88,16 @@ class DAOTasks {
         this.pool.getConnection((err, connection) => {
             if (err) { callback(err); return; }
             let lastId, sql;
-            if (task.done !== undefined) {
-                let done = task.done ? 1 : 0;
-                sql = "INSERT INTO task (user, text, done) VALUES ('" + email +
-                    "','" + task.text + "','" + done + "')";
-            } else sql = "INSERT INTO task (user, text) VALUES ('" + email + "','" + task.text + "')";
-            connection.query(
-                sql,
-                (err, result) => {
-                    if (err) { callback(err); return; }
+            let done = task.done ? 1 : 0;
 
+            connection.query(
+                "INSERT INTO task (user, text, done) VALUES (?, ?, ?)", [email, task.text, done],
+                (err, result) => {
+                    if (err) {
+                        connection.release();
+                        callback(err);
+                        return;
+                    }
                     lastId = result.insertId;
                     if (task.tags.length > 0) {
                         sql = "INSERT INTO tag (taskId, tag) VALUES (";
