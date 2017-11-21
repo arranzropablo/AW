@@ -88,9 +88,7 @@ class DAOTasks {
      */
     insertTask(email, task, callback) {
         this.pool.getConnection((err, connection) => {
-            if (err) { callback(err); return; }
-            let lastId;
-            
+            if (err) { callback(err); return; }            
             let done = task.done ? 1 : 0;
             connection.query("insert into task (user, text, done) values(?, ?, ?)",
                 [email, task.text, done],
@@ -100,16 +98,14 @@ class DAOTasks {
                         callback(err); 
                         return; 
                     }
-                    lastId = result.insertId;
+                    let lastId = result.insertId;
                     if (task.tags.length > 0) {
-                        let sql;
-                        sql = "INSERT INTO tag (taskId, tag) VALUES (";
-                        for (let i = 0; i < task.tags.length; ++i) {
-                            sql += lastId + ",'" + task.tags[i] + "')";
-                            if (i !== task.tags.length - 1) sql += ",(";
-                        }
-                        connection.query(
-                            sql,
+                        let tagsToInsert = [];
+                        task.tags.forEach(tag =>{
+                            tagsToInsert.push([lastId, tag]);
+                        })
+                        connection.query("insert into tag(taskId, tag) values ?",
+                            [tagsToInsert],
                             (err) => {
                                 connection.release();
                                 if (err) { 
