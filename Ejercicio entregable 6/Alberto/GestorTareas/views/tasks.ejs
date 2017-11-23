@@ -33,20 +33,18 @@
                         <span>
                             <span class="finalizada"><%= task.text %></span>
                         </span>
-                        <% } %>
-                            <% if (!task.done) { %>
-                                <span>
+                        <% } else { %>
+                            <span>
                                 <span class="enunciado"><%= task.text %></span>
-                                <% task.tags.forEach(tag => { %>
-                                    <span class="tag"> <%= tag %> </span>
-                                    <% }); %>
-                                        </span>
-                                        <form method="GET" action="/finish">
-                                            <input class="finalizada" value="Marcar finalizada" type="submit">
-                                            <input type="hidden" name="id" value=" <%= task.id %> ">
-                                        </form>
-                                        <% } %>
-                                            <% }); %>
+                            <% task.tags.forEach(tag => { %>
+                                <span class="tag"> <%= tag %> </span>
+                                <% }); %>
+                                    </span>
+                                    <form method="GET" action="/finish">
+                                        <input class="finalizada" value="Marcar finalizada" type="submit">
+                                        <input type="hidden" name="id" value=" <%= task.id %> ">
+                                    </form>
+                                    <% } }); %>
                 </li>
                 <li class="nueva">
                     <form method="POST" id="formNueva" action="/addTask">
