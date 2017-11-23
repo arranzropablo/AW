@@ -27,37 +27,29 @@
 
     <div class="tareas">
         <ul>
+            <% taskList.forEach(task => { %>
             <li>
-                <span>
-                    <span class="enunciado">Preparar práctica PDAP</span>
-                    <span class="tag">pdap</span>
-                    <span class="tag">practica</span>
-                </span>
-                <input class="finalizada" value="Marcar finalizada" type="submit">
-            </li>
+                    <% if (task.done) { %>
+                        <span>
+                            <span class="finalizada"><%= task.text %></span>
+                        </span>
+                    <% } else { %>
+                            <span>
+                                <span class="enunciado"><%= task.text %></span>
 
-            <li>
-                <span>
-                    <span class="finalizada">Mirar fechas congreso</span>
-                </span>
+                                <%task.tags.forEach(tag => {%>
 
-            </li>
+                                    <span class="tag"><%= tag %></span>
 
-            <li>
-                <span>
-                    <span class="enunciado">Ir al supermercado</span>
-                    <span class="tag">personal</span>
-                </span>
-                <input class="finalizada" value="Marcar finalizada" type="submit">
+                                <%});%>
+                            </span>
+                        <form action="/finish" method="POST">                                                            
+                            <input type="hidden" name="taskId" value="<%= task.id %>">
+                            <input class="finalizada" value="Marcar finalizada" type="submit">
+                        </form>
+                    <% } %>
             </li>
-
-            <li>
-                <span>
-                    <span class="enunciado">Mudanza</span>
-                    <span class="tag">personal</span>
-                </span>
-                <input class="finalizada" value="Marcar finalizada" type="submit">
-            </li>
+            <% }); %>
 
             <li class="nueva">
                 <form method="POST" id="formNueva" action="/addTask">
