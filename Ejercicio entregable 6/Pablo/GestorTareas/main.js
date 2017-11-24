@@ -41,11 +41,9 @@ app.get("/tasks", (request, response) => {
     daoT.getAllTasks("usuario@ucm.es", (error, list) =>{
         if(error){
             console.log(error);
-            //Hay que meterle estado de error, no?
             response.status(500);
             response.end();
         }else{
-            response.status(200);            
             response.render("tasks", { taskList: list })
             response.end();            
         }
@@ -54,16 +52,13 @@ app.get("/tasks", (request, response) => {
 
 app.post("/addTask", (request, response) => {
         let task = taskUtils.createTask(request.body.taskText);
-        //si no hago esto peta... alberto creo qe no lo hace¿?¿?
         task.done = false;
         daoT.insertTask("usuario@ucm.es", task, (error, success)=>{
         if(error){
             console.log(error);
-            //Esta bien meterle estado de error, no?
             response.status(500);
             response.end();
         }else{
-            response.status(302);            
             response.redirect("/tasks");
         }
     });
@@ -73,11 +68,9 @@ app.post("/finish", (request, response) => {
     daoT.markTaskDone(request.body.taskId, (error, success) => {
         if(error){
             console.log(error);
-            //Esta bien meterle estado de error, no?
             response.status(500);
             response.end();
         } else {
-            response.status(302);
             response.redirect("/tasks");
         }
     });
@@ -87,11 +80,9 @@ app.get("/deleteCompleted", (request, response) =>{
     daoT.deleteCompleted("usuario@ucm.es", (error, success) =>{
         if(error){
             console.log(error);
-            //Esta bien meterle estado de error, no?
             response.status(500);
             response.end();
         } else {
-            response.status(302);
             response.redirect("/tasks");
         }
     });
