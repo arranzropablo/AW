@@ -14,7 +14,7 @@
     "aplicaciones",
     "web"
   ],
-  "author": "Pablo Arranz Ropero",
+  "author": "Pablo Arranz Ropero, Alberto Camino Saez",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
