@@ -26,9 +26,9 @@ const middlewareSession = session({
     store: sessionStore
 });
 
-function checkCurrentUser(request, response, next){
-    next();
-}
+app.use((request, response, next) =>{
+
+});
 
 app.use(middlewareSession);
 app.use(express.static(path.join(__dirname, "public")));
