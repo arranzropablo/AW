@@ -26,16 +26,11 @@ const middlewareSession = session({
     store: sessionStore
 });
 
-app.use((request, response, next) =>{
-
-});
-
 app.use(middlewareSession);
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(bodyParser.urlencoded({ extended: false }));
-
 
 let pool = mysql.createPool({
     database: config.mysqlConfig.database,
@@ -61,14 +56,17 @@ app.get("/", (request, response) => {
 })
 
 app.get("/login", (request, response) => {
-    response.render("login", { errorMsg: null })
+    response.status(200);
+    response.render("login", { errorMsg: null });
 })
 
 app.post("/login", (request, response) => {
     daoU.isUserCorrect(request.body.mail, request.body.pass, (error, successful) => {
         if(error){
             console.log(error);
+            return;
         }else{
+            response.status(200);            
             if(successful){
                 request.session.currentUser = request.body.mail;
                 response.redirect("/tasks");
@@ -80,6 +78,16 @@ app.post("/login", (request, response) => {
         }
     })
 })
+
+app.use((request, response, next) =>{
+    if(request.session.currentUser){
+        response.locals.userEmail = request.session.currentUser;
+        next();
+    }
+    else{
+        response.redirect("/login");
+    }
+});
 
 app.get("/tasks", (request, response) => {
     daoT.getAllTasks("usuario@ucm.es", (error, list) =>{
