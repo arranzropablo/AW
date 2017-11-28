@@ -51,16 +51,25 @@ app.listen(config.port, function (err) {
     }
 });
 
-app.get("/", (request, response) => {
+function restrictLoginTemplate(request, response, next){
+    if(request.session.currentUser){
+        response.redirect("/tasks");
+    }
+    else{
+        next();
+    }
+}
+
+app.get("/", restrictLoginTemplate, (request, response) => {
     response.redirect("/login");
 })
 
-app.get("/login", (request, response) => {
+app.get("/login", restrictLoginTemplate, (request, response) => {
     response.status(200);
     response.render("login", { errorMsg: null });
 })
 
-app.post("/login", (request, response) => {
+app.post("/login", restrictLoginTemplate, (request, response) => {
     daoU.isUserCorrect(request.body.mail, request.body.pass, (error, successful) => {
         if(error){
             console.log(error);
@@ -73,8 +82,6 @@ app.post("/login", (request, response) => {
             }else{
                 response.render("login", { errorMsg: "Dirección de correo y/o contraseña no válidos"});
             }
-            //el usuario existe y contraseña correcta si true
-            //si false el usuario no existe o contraseña incorrecta
         }
     })
 })
@@ -90,7 +97,7 @@ app.use((request, response, next) =>{
 });
 
 app.get("/tasks", (request, response) => {
-    daoT.getAllTasks("usuario@ucm.es", (error, list) =>{
+    daoT.getAllTasks(request.session.currentUser, (error, list) =>{
         if(error){
             console.log(error);
             response.status(500);
@@ -105,7 +112,7 @@ app.get("/tasks", (request, response) => {
 app.post("/addTask", (request, response) => {
     let task = taskUtils.createTask(request.body.taskText);
     task.done = false;
-    daoT.insertTask("usuario@ucm.es", task, (error, success)=>{
+    daoT.insertTask(request.session.currentUser, task, (error, success)=>{
         if(error){
             console.log(error);
             response.status(500);
@@ -134,13 +141,31 @@ app.post("/finish", (request, response) => {
 });
 
 app.get("/deleteCompleted", (request, response) =>{
-    daoT.deleteCompleted("usuario@ucm.es", (error, success) =>{
+    daoT.deleteCompleted(request.session.currentUser, (error, success) =>{
         if(error){
             console.log(error);
             response.status(500);
             response.end();
         } else {
             response.redirect("/tasks");
+        }
+    });
+});
+
+app.get("/imagenUsuario", (request, response) => {
+    daoU.getUserImageName(request.session.currentUser, (error, success) =>{
+        if(error){
+            console.log(error);
+            response.status(500);
+            response.end();
+        }
+        else{
+            response.status(200);   
+            if(success == null){
+                response.sendFile(path.join(__dirname, "public/img/NoPerfil.png"));
+            }else{
+                response.sendFile(path.join(__dirname, "profile_imgs/"+success));
+            }
         }
     });
 });
