@@ -12,10 +12,11 @@
     "web",
     "entregable 8"
   ],
-  "author": "Manuel Montenegro",
+  "author": "Pablo Arranz Ropero",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.1",
-    "express": "^4.15.4"
+    "express": "^4.15.4",
+    "express-validator": "^4.3.0"
   }
 }

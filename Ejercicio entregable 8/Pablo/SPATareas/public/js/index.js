@@ -31,7 +31,15 @@ function taskToDOMElement(task) {
 }
 
 function loadTasks() {
-    // Implementar
+    $.ajax({
+        type: "get",
+        url: "/tasks",
+        success: function (data) {
+            data.forEach(task => {
+                $(".newTask").before(taskToDOMElement(task));
+            });
+        }
+    });
 }
 
 function onRemoveButtonClick(event) {
@@ -43,11 +51,27 @@ function onRemoveButtonClick(event) {
     // pulsado.
     let liPadre = selected.parent();
 
-    // Implementar el resto del método aquí.
-    // ...
+    $.ajax({
+        type: "delete",
+        url: "/tasks/" + liPadre.data("id"),
+        success: function (data) {
+            liPadre.remove();
+        }
+    });
 }
 
 function onAddButtonClick(event) {
-    // Implementar
+    let insertText = $("[name=\"taskText\"]").val();
+    if(insertText.trim()){
+        $.ajax({
+            type: "post",
+            url: "/tasks",
+            data: JSON.stringify({text: insertText}),
+            contentType: "application/json",
+            success: function (data) {
+                $(".newTask").before(taskToDOMElement(data));
+            }
+        });
+    }
 }
 

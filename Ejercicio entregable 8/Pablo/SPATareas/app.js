@@ -2,8 +2,8 @@ const express = require("express");
 const path = require("path");
 const config = require("./config");
 const bodyParser = require("body-parser");
-
 const app = express();
+const expressValidator = require("express-validator");
 
 let idCounter = 5;
 
@@ -33,13 +33,14 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
+app.use(expressValidator());
 
 app.get("/", (request, response) => {
     response.redirect("/tasks.html");
 });
 
 app.get("/tasks", (request, response) => {
-    // Implementar
+   response.json(tasks);
 });
 
 app.post("/tasks", (request, response) => {
@@ -54,7 +55,14 @@ app.post("/tasks", (request, response) => {
 });
 
 app.delete("/tasks/:id", (request, response) => {
-    // Implementar
+
+    if(!isNaN(Number(request.params.id)) && tasks.indexOf(tasks.find(task => task.id == Number(request.params.id))) > -1) {
+        tasks.splice(tasks.indexOf(tasks.find(task => task.id == Number(request.params.id))), 1);
+        response.status(200);
+    }else{
+        response.status(400);
+    }
+    response.json(JSON.stringify(new Object()));
 });
 
 app.listen(config.port, function(err) {
