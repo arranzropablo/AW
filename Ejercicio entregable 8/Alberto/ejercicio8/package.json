@@ -12,7 +12,7 @@
     "web",
     "entregable 8"
   ],
-  "author": "Manuel Montenegro",
+  "author": "Pablo Arranz Ropero & Juan Alberto Camino Saez",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.1",
