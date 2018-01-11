@@ -25,11 +25,6 @@ let tasks = [{
     }
 ];
 
-
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
-
-
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
 
@@ -55,14 +50,13 @@ app.post("/tasks", (request, response) => {
 app.delete("/tasks/:id", (request, response) => {
     let id = Number(request.params.id);
 
-    if (!tasks.some(x => { return x.id === id })) {
+    if (isNaN(id) || !tasks.some(x => { return x.id === id })) {
         response.status(400);
-        response.end();
     } else {
         tasks = tasks.filter(x => x.id !== id);
         response.status(200);
-        response.json({});
     }
+    response.json({});
 });
 
 app.listen(config.port, function(err) {

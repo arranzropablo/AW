@@ -26,14 +26,8 @@ let tasks = [
     }
 ];
 
-
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
-
-
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
-app.use(expressValidator());
 
 app.get("/", (request, response) => {
     response.redirect("/tasks.html");
@@ -56,13 +50,13 @@ app.post("/tasks", (request, response) => {
 
 app.delete("/tasks/:id", (request, response) => {
 
-    if(!isNaN(Number(request.params.id)) && tasks.indexOf(tasks.find(task => task.id == Number(request.params.id))) > -1) {
-        tasks.splice(tasks.indexOf(tasks.find(task => task.id == Number(request.params.id))), 1);
+    if(!isNaN(Number(request.params.id)) && tasks.indexOf(tasks.find(task => task.id === Number(request.params.id))) > -1) {
+        tasks.splice(tasks.indexOf(tasks.find(task => task.id === Number(request.params.id))), 1);
         response.status(200);
     }else{
         response.status(400);
     }
-    response.json(JSON.stringify(new Object()));
+    response.json({});
 });
 
 app.listen(config.port, function(err) {

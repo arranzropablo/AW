@@ -33,7 +33,7 @@ function taskToDOMElement(task) {
 function loadTasks() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:3000/tasks",
+        url: "/tasks",
         // En caso de éxito, colocamos el texto con el resultado
         // en el documento HTML
         success: function(data, textStatus, jqXHR) {
@@ -63,7 +63,7 @@ function onRemoveButtonClick(event) {
     let id = liPadre.data("id");
     $.ajax({
         type: "DELETE",
-        url: "http://localhost:3000/tasks/" + id,
+        url: "/tasks/" + id,
         success: function(data, textStatus, jqXHR) {
             liPadre.remove();
         },
@@ -76,11 +76,12 @@ function onRemoveButtonClick(event) {
 }
 
 function onAddButtonClick(event) {
-    let texto = $("#formNew input").prop("value");
-    if (texto.trim() !== "") {
+    let texto = $("[name=\"taskText\"]").val();
+    //let texto = $("#formNew input").prop("value");
+    if (texto.trim()) {
         $.ajax({
             type: "POST",
-            url: "http://localhost:3000/tasks",
+            url: "/tasks",
             data: JSON.stringify({ text: texto }),
             contentType: "application/json",
             // En caso de éxito, colocamos el texto con el resultado
