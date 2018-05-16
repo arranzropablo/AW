@@ -1,7 +1,4 @@
 # AW
-University subject
+Asignatura de la universidad para aprender Javascript tanto en el lado cliente (Ampliación conocimientos jQuery) como en el lado servidor con el framework node.js y express.js
 
-Folders named "Pablo" have content made just by https://github.com/arranzropablo<br>
-Folders named "Alberto" have content made just by https://github.com/caminosajalberto
-
-In case of no name you can assume the content is made by both.
+Cada carpeta tiene un ejercicio con el enunciado proporcionado y un zip con la plantilla base para hacer el ejercicio.

@@ -1,0 +1,122 @@
+body{
+	margin: 0;
+}
+
+header{
+	background: #9CC4B2;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+#header_right{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	width: 175px;
+}
+
+#header_right div{
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+
+#header_right img{
+	width: 70px;
+	height: 70px;
+	align-items: center;
+	padding: 10px 0;
+	border-radius: 50%;
+}
+
+#maincontent{
+	margin: 5% 25%;
+}
+
+#tareas_container{
+	list-style-type: none;
+	padding-left: 0px;
+}
+
+.tareas{
+	margin-bottom: 10px;
+	padding: 10px; 
+	display: flex;
+	justify-content: space-between;
+	border-color: #8F857D;
+	border-width: 2px;
+	border-style: solid;
+	background-color: #E8DDB5;
+	border-radius: 5px;
+	align-items: center;
+}
+
+.etiqueta{
+	background: #967D69;
+	text-align: center;
+	padding: 2px 6px;
+	border-radius: 10px;
+	color: #E8DDB5;
+}
+
+.estado_tarea{
+	display: flex;
+	align-items: center;
+	background: #8F857D;
+	padding: 3px 10px;
+	border-radius: 5px;
+	color: #E8DDB5;
+}
+
+.estado_tarea:hover{
+	background: #A59D97;
+}
+
+.tarea_terminada{
+	color: #848484;
+}
+
+.btn{
+	background: #967D69;
+	border-radius: 10px;
+	padding: 5px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.btn:hover{
+	background: #B5A496;
+}
+
+#nueva_tarea_input{
+	width: 100%;
+	margin-right: 10px;
+}
+
+#submit_tarea{
+	width: 20%;
+	border-radius: 5px;
+}
+
+#nueva_tarea{
+	background: #9CC4B2;
+	border-color: #076F30;
+}
+
+#eliminar_btn{
+	padding: 7px 25px;
+	margin: 40px 30%;
+}
+
+a{
+	text-decoration: none;
+	color:black;
+	display: block;
+}
+
+.estado_tarea span::before{
+	margin-right: 5px;
+	content:url("../resources/tick.gif");
+}
